@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.tiagobarbosa'
+version = '0.0.1'
+description = 'desafio-tecnico'
+
+
+subprojects {
+    apply plugin: 'java'
+    group = 'com.tiagobarbosa'
+    version = '0.0.1'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInteger())
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation libs.junit.jupiter
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

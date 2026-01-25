@@ -1,0 +1,42 @@
+plugins {
+    alias(libs.plugins.java)
+    alias(libs.plugins.dependency.management)
+    alias(libs.plugins.springboot)
+}
+
+group = 'com.tiagobarbosa'
+version = '0.0.1'
+description = 'backend'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInteger())
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(libs.springboot.starter)
+    implementation(libs.springboot.starter.web)
+    implementation(libs.springboot.starter.validation)
+    implementation(libs.springboot.starter.data.jpa)
+    implementation(libs.springboot.starter.flyway)
+    implementation(libs.springdoc.webmvc.ui)
+
+    implementation(libs.postgresql)
+    implementation(libs.mariadb)
+    implementation(libs.flyway.postgresql)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.springboot.starter.test)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+test {
+    useJUnitPlatform()
+}

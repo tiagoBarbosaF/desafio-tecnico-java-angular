@@ -1,0 +1,31 @@
+[versions]
+java = "25"
+springboot = "4.0.0"
+dependencyManagement = "1.1.7"
+springdoc = "2.8.14"
+junit = "5.10.0"
+junitPlatform = "6.0.2"
+mockito-version = "5.5.0"
+flyway = "11.20.2"
+
+[libraries]
+springboot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+springboot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+springboot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springboot" }
+springboot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+springboot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+springboot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway", version.ref = "springboot" }
+springdoc-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+postgresql = { module = "org.postgresql:postgresql" }
+mariadb = { module = "org.mariadb.jdbc:mariadb-java-client" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
+springboot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springboot" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-version" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito-version" }
+
+[plugins]
+springboot = { id = "org.springframework.boot", version.ref = "springboot" }
+java = { id = 'java' }
+dependency-management = { id = "io.spring.dependency-management", version.ref = "dependencyManagement" }
