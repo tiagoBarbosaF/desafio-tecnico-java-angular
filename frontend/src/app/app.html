@@ -1,0 +1,53 @@
+<div class="container">
+
+  <h1>Consulta de Créditos</h1>
+  <p class="subtitle">Consulte créditos por número da NFS-e ou número do crédito</p>
+
+  <div class="search-box">
+    <input
+      #buscaInput
+      type="text"
+      placeholder="Ex: 7891011"
+    />
+
+    <button class="primary" (click)="buscarPorNfse(buscaInput.value)">
+      Buscar por NFS-e
+    </button>
+
+    <button class="secondary" (click)="buscarPorCredito(buscaInput.value)">
+      Buscar por Crédito
+    </button>
+  </div>
+
+  @if (creditos().length > 0) {
+    <table>
+      <thead>
+      <tr>
+        <th>Nº Crédito</th>
+        <th>Nº NFS-e</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (item of creditos(); track item.numeroNfse) {
+          <tr>
+            <td>{{ item.numeroCredito }}</td>
+            <td>{{ item.numeroNfse }}</td>
+            <td>{{ item.dataConstituicao }}</td>
+            <td>{{ item.valorIssqn | currency:'BRL' }}</td>
+            <td>
+              <span class="badge">{{ item.tipoCredito }}</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="empty-state">
+      Nenhum crédito encontrado
+    </div>
+  }
+
+</div>
