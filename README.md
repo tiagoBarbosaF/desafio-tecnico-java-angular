@@ -30,6 +30,8 @@ Além da API, o projeto conta com um frontend desenvolvido em Angular, responsá
 #### Infraestrutura
 - Docker
 - Docker Compose
+- Apache Kafka (mensageria de eventos)
+- Zookeeper
 
 
 ### 📐 Arquitetura
@@ -46,6 +48,43 @@ Além disso:
 - Migrations de banco são gerenciadas via Flyway
 - Configurações externas via variáveis de ambiente
 - Containers isolados por responsabilidade (backend / banco)
+
+### 📩 Mensageria (Desafio Adicional)
+
+Como desafio adicional, foi implementado um mecanismo de mensageria utilizando **Apache Kafka**.
+
+A cada consulta realizada na API de créditos fiscais, um evento é publicado em um tópico Kafka, simulando um cenário real de auditoria, rastreamento ou integração com outros sistemas.
+
+O Kafka utiliza ZooKeeper para coordenação do broker no ambiente Docker.
+
+obs.: Não foi implementado consumer, pois o objetivo do desafio é apenas simular publicação de eventos para auditoria.
+
+#### 📌 Evento publicado
+- Tipo da consulta (NFS-e ou Número do Crédito)
+- Valor consultado
+- Resultado da consulta (encontrado ou não)
+- Timestamp da operação
+
+Os eventos são serializados em JSON e enviados para o tópico:
+
+- `consulta_credito`
+
+#### ▶️ Execução
+
+O Kafka é inicializado automaticamente via Docker Compose, junto com o backend, frontend e banco de dados.
+
+Não é necessário realizar nenhuma configuração manual.
+
+#### 🔎 Validação dos eventos
+
+É possível consumir os eventos publicados no Kafka utilizando o console consumer:
+
+```bash
+docker exec -it kafka kafka-console-consumer \
+  --bootstrap-server kafka:9092 \
+  --topic consulta_credito \
+  --from-beginning
+```
 
 
 ### 🖥️ Frontend
@@ -173,6 +212,7 @@ Para rodar os testes localmente (fora do Docker):
 - ✔ Docker Compose configurado corretamente
 - ✔ Frontend Angular integrado à API
 - ✔ Aplicação fullstack executável com um único comando
+- ✔ Publicação de eventos em Kafka a cada consulta realizada
 
 
 ### 👤 Autor

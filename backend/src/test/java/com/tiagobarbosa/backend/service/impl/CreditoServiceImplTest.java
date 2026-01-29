@@ -3,6 +3,8 @@ package com.tiagobarbosa.backend.service.impl;
 import com.tiagobarbosa.backend.dto.CreditoResponseDTO;
 import com.tiagobarbosa.backend.entity.Credito;
 import com.tiagobarbosa.backend.exception.CreditoNotFoundException;
+import com.tiagobarbosa.backend.infrastructure.messaging.ConsultaCreditoEvent;
+import com.tiagobarbosa.backend.infrastructure.messaging.ConsultaCreditoEventPublisher;
 import com.tiagobarbosa.backend.mapper.CreditoMapper;
 import com.tiagobarbosa.backend.repository.CreditoRepository;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,8 @@ class CreditoServiceImplTest {
     private CreditoRepository creditoRepository;
     @Mock
     private CreditoMapper creditoMapper;
+    @Mock
+    private ConsultaCreditoEventPublisher consultaCreditoEventPublisher;
     @InjectMocks
     private CreditoServiceImpl creditoServiceImpl;
 
@@ -52,6 +56,7 @@ class CreditoServiceImplTest {
         assertEquals("123456", result.numeroCredito());
         verify(creditoRepository, times(1)).findByNumeroCredito("123456");
         verify(creditoMapper, times(1)).toDTO(credito);
+        verify(consultaCreditoEventPublisher, times(1)).publish(any(ConsultaCreditoEvent.class));
     }
 
     @Test
@@ -63,6 +68,7 @@ class CreditoServiceImplTest {
 
         verify(creditoRepository, times(1)).findByNumeroCredito("999999");
         verifyNoInteractions(creditoMapper);
+        verify(consultaCreditoEventPublisher, times(1)).publish(any(ConsultaCreditoEvent.class));
     }
 
     @Test
@@ -90,6 +96,7 @@ class CreditoServiceImplTest {
         verify(creditoRepository, times(1)).findByNumeroNfse("7891011");
         verify(creditoMapper, times(1)).toDTO(credito1);
         verify(creditoMapper, times(1)).toDTO(credito2);
+        verify(consultaCreditoEventPublisher, times(1)).publish(any(ConsultaCreditoEvent.class));
     }
 
     @Test
@@ -102,5 +109,6 @@ class CreditoServiceImplTest {
         assertTrue(result.isEmpty());
         verify(creditoRepository, times(1)).findByNumeroNfse("0000");
         verifyNoInteractions(creditoMapper);
+        verify(consultaCreditoEventPublisher, times(1)).publish(any(ConsultaCreditoEvent.class));
     }
 }

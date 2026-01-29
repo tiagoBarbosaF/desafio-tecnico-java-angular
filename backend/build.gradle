@@ -26,8 +26,9 @@ dependencies {
     implementation(libs.springboot.starter.flyway)
     implementation(libs.springdoc.webmvc.ui)
 
+    implementation(libs.springboot.kafka)
+
     implementation(libs.postgresql)
-    implementation(libs.mariadb)
     implementation(libs.flyway.postgresql)
 
     testImplementation(libs.junit.jupiter)
